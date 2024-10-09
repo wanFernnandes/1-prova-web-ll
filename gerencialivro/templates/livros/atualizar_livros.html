@@ -1,0 +1,67 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block 'dashboard' %}
+<h1 class="my-4">Atualizar livros</h1>
+
+<form method="post" class="needs-validation" novalidate>
+    {% csrf_token %}
+    
+    <div class="row">
+        <!-- autor -->
+        <div class="form-group col-md-6">
+            <label for="id_autor">autor</label>
+            <input type="text" class="form-control {% if form.autor.errors %}is-invalid{% endif %}" 
+                   id="id_autor" name="autor" value="{{ form.autor.value|default_if_none:'' }}" maxlength="100" required>
+            {% if form.autor.errors %}
+            <div class="invalid-feedback">{{ form.autor.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Titulo -->
+        <div class="form-group col-md-6">
+            <label for="id_titulo">titulo</label>
+            <input type="text" class="form-control {% if form.titulo.errors %}is-invalid{% endif %}" 
+                   id="id_titulo" name="titulo" value="{{ form.titulo.value|default_if_none:'' }}" maxlength="100" required>
+            {% if form.titulo.errors %}
+            <div class="invalid-feedback">{{ form.titulo.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Ano -->
+        <div class="form-group col-md-6">
+            <label for="id_ano">ano</label>
+            <input type="text" class="form-control {% if form.ano.errors %}is-invalid{% endif %}" 
+                   id="id_ano" name="ano" value="{{ form.ano.value|default_if_none:'' }}" maxlength="4" required>
+            {% if form.ano.errors %}
+            <div class="invalid-feedback">{{ form.ano.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Genero -->
+        <div class="form-group col-md-6">
+            <label for="id_genero">genero</label>
+            <input type="text" class="form-control {% if form.genero.errors %}is-invalid{% endif %}" 
+                   id="id_genero" name="genero" value="{{ form.genero.value|default_if_none:'' }}" maxlength="100" required>
+            {% if form.genero.errors %}
+            <div class="invalid-feedback">{{ form.genero.errors }}</div>
+            {% endif %}
+        </div>
+    
+
+        <!-- livros -->
+        <div class="form-group col-md-3">
+            <label for="id_livros">livros</label>
+            <input type="text" class="form-control {% if form.livros.errors %}is-invalid{% endif %}" 
+                   id="id_livros" name="livros" value="{{ form.livros.value|default_if_none:'' }}" maxlength="11" required>
+            {% if form.livros.errors %}
+            <div class="invalid-feedback">{{ form.livros.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="{% url 'listar_livros' %}" class="btn btn-secondary ml-2">Voltar</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block dashboard %}
+<h1 class="my-4">Lista de Livros</h1>
+<a href="{% url 'exportar_livros_pdf' %}" target="_blank" class="btn colorprimarybtn2 mb-3">Exportar PDF</a>
+<a href="{% url 'criar_livros' %}" class="btn btn-primary mb-3">Adicionar Livros</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID do Livro</th>
+            <th>Autor</th>
+            <th>Título</th>
+            <th>Gênero</th>
+            <th>Ano</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for livro in livros %}
+        <tr>
+            <td>
+                <a href="{% url 'atualizar_livros' livro.id %}" class="btn btn-sm btn-warning">Editar</a>
+                <form action="{% url 'deletar_livros' livro.id %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este livro?');">Deletar</button>
+                </form>
+            </td>
+            <td>{{ livro.id_livros }}</td>
+            <td>{{ livro.autor }}</td>
+            <td>{{ livro.titulo }}</td>
+            <td>{{ livro.genero }}</td>
+            <td>{{ livro.ano }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Nenhum Livro cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

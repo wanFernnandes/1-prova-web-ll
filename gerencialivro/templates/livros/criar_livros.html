@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block dashboard %}
+<h1 class="my-4">Criar Livros</h1>
+
+<form method="post" class="needs-validation" novalidate>
+    {% csrf_token %}
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label for="id_livros">ID do Livro</label>
+            <input type="text" class="form-control {% if form.id_livros.errors %}is-invalid{% endif %}" id="id_livros"
+                name="id_livros" required>
+            {% if form.id_livros.errors %}
+            <div class="invalid-feedback">{{ form.id_livros.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="id_titulo">Título</label>
+            <input type="text" class="form-control {% if form.titulo.errors %}is-invalid{% endif %}" id="id_titulo"
+                name="titulo" required>
+            {% if form.titulo.errors %}
+            <div class="invalid-feedback">{{ form.titulo.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="id_ano">Ano</label>
+            <input type="number" class="form-control {% if form.ano.errors %}is-invalid{% endif %}" id="id_ano" name="ano"
+                required>
+            {% if form.ano.errors %}
+            <div class="invalid-feedback">{{ form.ano.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="id_genero">Gênero</label>
+            <input type="text" class="form-control {% if form.genero.errors %}is-invalid{% endif %}" id="id_genero"
+                name="genero" required>
+            {% if form.genero.errors %}
+            <div class="invalid-feedback">{{ form.genero.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="{% url 'listar_livros' %}" class="btn btn-secondary ml-2">Voltar</a>
+</form>
+{% endblock %}
