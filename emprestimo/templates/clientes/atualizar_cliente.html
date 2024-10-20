@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'dashboard' %}
+<h1 class="my-4">Atualizar Cliente</h1>
+
+<form method="post" class="needs-validation" novalidate>
+    {% csrf_token %}
+    
+    <div class="row">
+        <!-- Nome -->
+        <div class="form-group col-md-6">
+            <label for="id_nome">Nome</label>
+            <input type="text" class="form-control {% if form.nome.errors %}is-invalid{% endif %}" 
+                   id="id_nome" name="nome" value="{{ form.nome.value|default_if_none:'' }}" maxlength="100" required>
+            {% if form.nome.errors %}
+            <div class="invalid-feedback">{{ form.nome.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- CPF -->
+        <div class="form-group col-md-3">
+            <label for="id_cpf">CPF</label>
+            <input type="text" class="form-control {% if form.cpf.errors %}is-invalid{% endif %}" 
+                   id="id_cpf" name="cpf" value="{{ form.cpf.value|default_if_none:'' }}" maxlength="11" required>
+            {% if form.cpf.errors %}
+            <div class="invalid-feedback">{{ form.cpf.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group col-md-5">
+            <label for="id_nome">email</label>
+            <input type="text" class="form-control {% if form.email.errors %}is-invalid{% endif %}" 
+                   id="id_email" name="email" value="{{ form.email.value|default_if_none:'' }}" maxlength="100" required>
+            {% if form.email.errors %}
+            <div class="invalid-feedback">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group col-md-5">
+            <label for="id_senha">senha</label>
+            <input type="password" class="form-control {% if form.senha.errors %}is-invalid{% endif %}" 
+                   id="id_senha" name="senha" value="{{ form.email.value|default_if_none:'' }}" maxlength="8" required>
+            {% if form.senha.errors %}
+            <div class="invalid-feedback">{{ form.senha.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="{% url 'lista_clientes' %}" class="btn colorprimarybtn2 ml-2">Voltar</a>
+</form>
+
+{% endblock %}
