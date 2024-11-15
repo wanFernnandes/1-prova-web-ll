@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<h1>Alocar Livro</h1>
+
+<p>Você está prestes a alocar o livro: <strong>{{ livro.titulo }}</strong>.</p>
+<p>Deseja confirmar?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Confirmar Alocação</button>
+    <a href="{% url 'lista_alocacoes' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+
+{% endblock %}

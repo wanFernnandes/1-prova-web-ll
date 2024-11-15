@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alocações Ativas</title>
+</head>
+<body>
+    <h1>Alocações Ativas</h1>
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Livro</th>
+                <th>Usuário</th>
+                <th>Data de Início</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alocacao in alocacoes %}
+                <tr>
+                    <td>{{ alocacao.livro.titulo }}</td>
+                    <td>{{ alocacao.usuario.nome }}</td>
+                    <td>{{ alocacao.data_inicio }}</td>
+                    <td>
+                        {% if alocacao.data_fim %}
+                            Finalizado em {{ alocacao.data_fim }}
+                        {% else %}
+                            Em andamento
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

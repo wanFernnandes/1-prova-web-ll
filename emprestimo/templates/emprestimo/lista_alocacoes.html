@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block dashboard %}
+
+<h1 class="my-4">Alocações Ativas</h1>
+
+<div class="mb-3">
+    <a href="{% url 'exportar_alocacoes_pdf' %}" target="_blank" class="btn btn-secondary">Exportar PDF</a>
+    <!-- Aqui usamos 'livro.id_livros' para passar o campo correto -->
+    <a href="{% url 'nova_alocacao' livro.id_livros %}" class="btn btn-primary">Nova Alocação</a>
+
+
+</div>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Livro</th>
+            <th>Usuário</th>
+            <th>Data de Início</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for alocacoes in alocacao %}
+        <tr>
+            <td>{{ alocacao.livro.titulo }}</td>
+            <td>{{ alocacao.usuario.nome }}</td>
+            <td>{{ alocacao.data_inicio }}</td>
+            <td>
+                {% if alocacao.data_fim %}
+                <span class="badge bg-success">Finalizado em {{ alocacao.data_fim }}</span>
+                {% else %}
+                <span class="badge bg-warning">Em andamento</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if not alocacao.data_fim %}
+                <a href="{% url 'finalizar_alocacao' alocacao.id %}" class="btn btn-sm btn-danger"
+                    onclick="return confirm('Tem certeza de que deseja finalizar esta alocação?');">
+                    Finalizar
+                </a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p class="text-muted">Não há alocações ativas no momento.</p>
+
+
+{% endblock %}
