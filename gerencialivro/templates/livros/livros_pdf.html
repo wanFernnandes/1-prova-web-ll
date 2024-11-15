@@ -16,7 +16,7 @@
 
         h1 {
             text-align: center;
-            color: #1E90FF;
+            color: #2a006d;
             margin-top: 20px;
         }
 
@@ -43,7 +43,7 @@
         }
 
         th {
-            background-color: #1E90FF;
+            background-color: #29044d;
             color: white;
         }
 
@@ -73,10 +73,11 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Titulo</th>
                     <th>Autor</th>
-                    <th>Ano</th>
+                    <th>Titulo</th>
                     <th>Genero</th>
+                    <th>Ano</th>
+
 
                 </tr>
             </thead>
@@ -88,6 +89,7 @@
                     <td>{{ livros.titulo }}</td>
                     <td>{{ livros.genero }}</td>
                     <td>{{ livros.ano }}</td>
+
                 </tr>
                 
                 {% endfor %}
