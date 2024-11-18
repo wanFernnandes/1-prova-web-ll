@@ -1,60 +1,51 @@
+# views.py
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Cliente
-from .forms import ClienteForm
-#from django.contrib.auth.decorators import login_required
+from .models import Alocacao
+from gerencialivro.models import Livro
+from django.utils import timezone
+from django.contrib import messages
 
-from weasyprint import HTML
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from weasyprint import HTML
+
+def nova_alocacao(request, livro_id):
+    livro = get_object_or_404(Livro, pk=livro_id)
+    print(f"Livro encontrado: {livro.titulo}")  # Verifique se isso é impresso no console
+    return render(request, 'emprestimo/nova_alocacao.html', {'livro': livro})
+
+    
+
+from django.shortcuts import render
+from .models import Livro, Alocacao
+
+def lista_alocacoes(request):
+    livros = Livro.objects.all()  # Carrega todos os livros para exibir no template
+    alocacoes = Alocacao.objects.filter(ativo=True)  # Filtra as alocações ativas
+    return render(request, 'emprestimo/lista_alocacoes.html', {
+        'livros': livros,
+        'alocacoes': alocacoes,
+    })
 
 
-def lista_clientes(request):  
-    clientes = Cliente.objects.all()
-    print(clientes)  # Adicione isso para verificar a saída no console
-    return render(request, 'clientes/lista_clientes.html', {'clientes': clientes})
+def finalizar_alocacao(request, alocacao_id):
+    alocacao = get_object_or_404(Alocacao, id=alocacao_id)
+    alocacao.finalizar_alocacao()
+    messages.success(request, f"O livro '{alocacao.livro.titulo}' foi devolvido com sucesso.")
+    return redirect('lista_alocacoes')
 
-def criar_cliente(request):
-    if request.method == "POST":
-        form = ClienteForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_clientes')
-    else:
-        form = ClienteForm()
-    return render(request, 'clientes/criar_clientes.html', {'form': form})
+def exportar_alocacoes_pdf(request):
+    # Recuperar todas as alocações ativas
+    alocacoes = Alocacao.objects.filter(ativo=True)
 
-def atualizar_cliente(request, id):
-    cliente = get_object_or_404(Cliente, id=id)
-    if request.method == "POST":
-        form = ClienteForm(request.POST, instance=cliente)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_clientes')
-    else:
-        form = ClienteForm(instance=cliente)
-    return render(request, 'clientes/atualizar_cliente.html', {'form': form})
+    # Renderizar o template de alocação para o PDF
+    html_string = render_to_string('emprestimo/alocacoes_pdf.html', {'alocacoes': alocacoes})
 
-def deletar_cliente(request, id):
-    cliente = get_object_or_404(Cliente, id=id)
-    if request.method == "POST":
-        cliente.delete()
-        return redirect('lista_clientes')
-    return render(request, 'clientes/deletar_cliente.html', {'cliente': cliente})
+    # Gerar o PDF
+    html = HTML(string=html_string)
+    pdf = html.write_pdf()
 
-#@login_required
-def exportar_cliente_pdf(request):
-    # Buscando todos os usuários
-    clientes = Cliente.objects.all()
-
-    # Renderizando o template HTML com os dados dos usuários
-    html_string = render_to_string('clientes/cliente_pdf.html', {'clientes': clientes})
-
-    # Criando a resposta HTTP para o PDF
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'inline; filename="cliente.pdf"'
-
-    # Convertendo o HTML para PDF usando WeasyPrint
-    HTML(string=html_string).write_pdf(response)
-
+    # Retornar o PDF como resposta HTTP
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="alocacoes_ativas.pdf"'
     return response
-

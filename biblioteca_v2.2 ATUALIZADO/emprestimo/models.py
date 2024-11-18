@@ -1,10 +1,22 @@
+# models.py
+from django.conf import settings
 from django.db import models
+from gerencialivro.models import Livro
+from django.utils import timezone
 
-class Cliente(models.Model):
-    nome = models.CharField(max_length=100)
-    cpf = models.CharField(max_length=11, unique=True)
-    email = models.CharField(max_length=100)
-    senha = models.CharField(max_length=100, default='1234')  # Adicione o padrão aqui
+
+class Alocacao(models.Model):
+    livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    data_inicio = models.DateField(auto_now_add=True)
+    data_fim = models.DateField(null=True, blank=True)
+    ativo = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.nome+" - "+self.cpf+ " - " +self.email+ "-" +self.senha
+        return f"{self.livro} alocado para {self.usuario}"
+
+    def finalizar_alocacao(self):
+        """Marca o empréstimo como concluído e registra a data de devolução."""
+        self.data_fim = timezone.now().date()
+        self.ativo = False
+        self.save()

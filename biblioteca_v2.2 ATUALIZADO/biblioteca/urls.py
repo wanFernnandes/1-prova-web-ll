@@ -22,6 +22,7 @@ urlpatterns = [
     path('gerencialivro/', include('gerencialivro.urls')),
     path('emprestimo/', include('emprestimo.urls')),
     path('usuarios/', include('usuarios.urls')),
+    path('gerenciarCliente', include('gerenciarCliente.urls')),
 ]
 
 
