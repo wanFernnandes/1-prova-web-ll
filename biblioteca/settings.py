@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Define o diretório base do projeto. Esse caminho é construído a partir do arquivo atual
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -20,15 +22,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
+#Chave secreta usada para criptografia interna no Django. Ela deve ser mantida em segredo em ambientes de produção.
 SECRET_KEY = 'django-insecure-42m_##wny1$+h)+139u2qg_)c-fq!2%%uny2rptx#&d5461yfq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
+#Se True, ativa o modo de desenvolvimento, exibindo mensagens de erro detalhadas. Deve ser False em produção.
 DEBUG = True
 
+#Lista de hosts que o projeto Django pode servir. É importante configurar corretamente em produção.
 ALLOWED_HOSTS = []
 
 
 # Application definition
+
+# ista de apps instalados no projeto. Inclui tanto os apps padrão do Django
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,8 +48,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'emprestimo',
     'gerencialivro',
+    'usuarios',
+    'gerenciarCliente',
 ]
 
+#Lista de middlewares que são executados em cada requisição/resposta.
+
+#Eles incluem funcionalidades como segurança, sessões, autenticação, e proteção contra CSRF.
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,6 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+#Define o arquivo que contém as configurações de rotas do projeto
 ROOT_URLCONF = 'biblioteca.urls'
 
 TEMPLATES = [
@@ -86,6 +101,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
+#Define o arquivo que contém as configurações de rotas do projeto
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -118,15 +134,33 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files
 
 import os
+#Define o URL de acesso aos arquivos estáticos (CSS, JavaScript, imagens).
 STATIC_URL = 'static/'
 
 # Diretório para coletar arquivos estáticos
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),  # Ajuste o caminho conforme necessário
+    os.path.join(BASE_DIR, "templates/static"),  # Ajuste o caminho conforme necessário
 ]
+STATIC_ROOT = os.path.join('static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
+#Define o tipo de campo chave primária padrão
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# settings.py
 
+LOGIN_REDIRECT_URL = 'listar_usuarios'
+
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'login'  # Redirecionar para a página de login após logout
+
+DEBUG = True  # Certifique-se de que isso está definido como True
+
+#Define o modelo customizado de usuário
+AUTH_USER_MODEL = 'usuarios.Usuario'
+
+AUTHENTICATION_BACKENDS = [
+    'usuarios.auth_backends.EmailBackend',  # Nosso backend customizado
+    'django.contrib.auth.backends.ModelBackend',  # Backend padrão
+]
