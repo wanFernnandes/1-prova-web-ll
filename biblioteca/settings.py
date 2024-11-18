@@ -139,8 +139,9 @@ STATIC_URL = 'static/'
 
 # Diretório para coletar arquivos estáticos
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),  # Ajuste o caminho conforme necessário
+    os.path.join(BASE_DIR, "templates/static"),  # Ajuste o caminho conforme necessário
 ]
+STATIC_ROOT = os.path.join('static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
