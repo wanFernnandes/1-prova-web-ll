@@ -1,15 +1,17 @@
 {% extends "base.html" %}
-{% load static %}
 {% block content %}
-<h1>Alocar Livro</h1>
 
-<p>Você está prestes a alocar o livro: <strong>{{ livro.titulo }}</strong>.</p>
-<p>Deseja confirmar?</p>
+<div class="container">
+    <h1 class="my-4">Alocar o Livro: {{ livro.titulo }}</h1>
 
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-primary">Confirmar Alocação</button>
-    <a href="{% url 'lista_alocacoes' %}" class="btn btn-secondary">Cancelar</a>
-</form>
+    <p>Você está prestes a alocar o livro: <strong>{{ livro.titulo }}</strong> (ID: <strong>{{ livro.id_livros }}</strong>).</p>
+    <p>Deseja confirmar esta ação?</p>
+
+    <form method="POST" class="mt-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Confirmar Alocação</button>
+        <a href="{% url 'lista_alocacoes' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
 
 {% endblock %}

@@ -1,21 +1,90 @@
 <!DOCTYPE html>
 <html>
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuários</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2a006d;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #29044d;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Ajustar a largura das colunas */
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 40%;
+            /* Aumenta a largura da coluna Nome */
+        }
+
+        /* Ajustar margens da página */
+        .container {
+            width: 100%;
+        }
+    </style>
 <head>
     <title>Alocações Ativas</title>
 </head>
 <body>
     <h1>Alocações Ativas</h1>
     <table border="1" cellpadding="5">
-        <thead>
-            <tr>
-                <th>Livro</th>
-                <th>Usuário</th>
-                <th>Data de Início</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for alocacao in alocacoes %}
+
+<body>
+    <div class="container">
+        <!-- <h1>Usuários Cadastrados</h1> -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Livro</th>
+                    <th>Usuário</th>
+                    <th>Data de Início</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alocacao in alocacao %}
                 <tr>
                     <td>{{ alocacao.livro.titulo }}</td>
                     <td>{{ alocacao.usuario.nome }}</td>
@@ -26,10 +95,11 @@
                         {% else %}
                             Em andamento
                         {% endif %}
-                    </td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>
