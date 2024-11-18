@@ -1,0 +1,128 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <title>Sistema Biblioteca</title>
+
+    <style>
+        body {
+            background-color: #63707e;
+            /* Fundo suave */
+        }
+
+        .login-container {
+            margin-top: 5%;
+            padding: 2rem;
+            background-color: #ffffff;
+            /* Fundo branco para o formulário */
+            border-radius: 10px;
+            /* Cantos arredondados */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            /* Sombra suave */
+            text-align: center;
+        }
+
+        .btn-login {
+            background-color: #2f363d;
+            border: none;
+            color: white;
+            transition: background-color 0.3s ease;
+            /* Efeito suave ao passar o mouse */
+        }
+
+        .btn-login:hover {
+            background-color: #1f5feb;
+            /* Cor mais escura ao passar o mouse */
+            color: white;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border: 1px solid #000000;
+            /* Cor da borda */
+        }
+
+        .mb-3 {
+            color: black;
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 20px;
+            /* Centralizar a imagem e adicionar margem inferior */
+            width: 150px;
+            height: auto;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-lg-5 col-md-7 col-sm-9 login-container">
+            <img src="{% static 'images/logo1.png' %}" alt="LogoFIRE" class="logo">
+            <h1 class="text-center mb-4 text-primary">Biblioteca Literary Fire</h1>
+
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+
+                <!-- Campo de Email -->
+                <div class="mb-3">
+                    <label for="id_email" class="form-label text-primary">Email</label>
+                    <input type="email" id="id_email" name="username" class="form-control"
+                        placeholder="Digite seu email" required>
+                    {% if form.username.errors %}
+                    <div class="text-danger mt-1">{{ form.username.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Campo de Senha -->
+                <div class="mb-3">
+                    <label for="id_password" class="form-label text-primary">Senha</label>
+                    <input type="password" id="id_password" name="password" class="form-control"
+                        placeholder="Digite sua senha" required>
+                    {% if form.password.errors %}
+                    <div class="text-danger mt-1">{{ form.password.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Erros não relacionados a campos específicos -->
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <!-- Botão de Login -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-login">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubbLSlWub3EcIP+p6HIU5A1VuTkTAJb1g1go+fzT7ERBdh"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGKtSkaNkw3l5D6/hG8u+T2lrw5rLvTRF6zztJ6Zztx9Jf8uge7fxK6l9xg"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
