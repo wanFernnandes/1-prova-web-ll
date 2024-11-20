@@ -1,0 +1,9 @@
+{% if alocacao.ativo %}
+<a href="{% url 'finalizar_alocacao' alocacao.id %}" class="btn btn-sm btn-danger"
+    onclick="return confirm('Tem certeza de que deseja finalizar esta alocação?');">
+    Finalizar
+</a>
+
+{% else %}
+<span class="badge bg-success">Finalizado em {{ alocacao.data_fim }}</span>
+{% endif %}
